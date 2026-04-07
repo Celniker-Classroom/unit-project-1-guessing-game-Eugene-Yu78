@@ -3,7 +3,7 @@ let answer = 0;
 let guessCount = 0;
 let totalWins = 0;
 let totalGuesses = 0;
-let scores = 0;
+let scores = [];
 
 //player Name
 let playerName = prompt("Enter your name:");
@@ -17,7 +17,8 @@ document.getElementById("playBtn").addEventListener("click",function(){
 
         }
     }
-})
+    
 answer = Math.floor(Math.random() * range) + 1;
 
 document.getElementById("msg").textContent = playerName + ", guess a number between 1 and " + range;
+})
