@@ -4,7 +4,6 @@ let guessCount = 0;
 let totalWins = 0;
 let totalGuesses = 0;
 let scores = [];
-
 //player Name
 let playerName = prompt("Enter your name:");
 //play
@@ -13,12 +12,23 @@ document.getElementById("playBtn").addEventListener("click",function(){
     let range = 3;
     for(let i = 0; i < radios.length; i++){
         if(radios[i].checked){
-            range=parseint(radios[i].value);
-
+            range = parseInt(radios[i].value);
         }
     }
+//random number generator
+    answer = Math.floor(Math.random() * range) + 1;
+//button 
+    document.getElementById("msg").textContent = playerName + ", guess a number between 1 and " + range;
+    document.getElementById("guess").value = " ";
+    document.getElementById("guessBtn").disabled = false;
+    document.getElementById("giveUpBtn").disabled = false;
+    document.getElementById("playBtn").disabled = true;
+//disable level selection
+    let levelRadios = document.getElementsByName("level");
+    for (let i=0; i<levelRadios.length; i++){
+        levelRadios[i].disabled = true;
+    }
     
-answer = Math.floor(Math.random() * range) + 1;
 
-document.getElementById("msg").textContent = playerName + ", guess a number between 1 and " + range;
+
 })
