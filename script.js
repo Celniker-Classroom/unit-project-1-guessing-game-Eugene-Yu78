@@ -32,12 +32,17 @@ document.getElementById("playBtn").addEventListener("click",function(){
 
 //guess
 document.getElementById("guessBtn").addEventListener("click", function(){
-    let guessInput = document.getElementById("guess");
-    let guess = parseInt(guessInput.value);
+    let input = document.getElementById("guess");
+    let guess = parseInt(input.value);
+    if(isNaN(guess)){
+        document.getElementById("msg").textContent = "Please enter a valid number,!";
+        return;
+    }
     guessCount++;
     totalGuesses++;
+    
     if(guess === answer){
-        document.getElementById("msg").textContent = "Congratulations " + playerName + "! You guessed the number in " + guessCount + " guesses.";
+        document.getElementById("msg").textContent = "Congratulations! You guessed the number in " + guessCount + " guesses.";
         totalWins++;
         scores.push(guessCount);
         endGame();
@@ -46,7 +51,18 @@ document.getElementById("guessBtn").addEventListener("click", function(){
     } else {
         document.getElementById("msg").textContent = "Too high! Try again.";
     }
-    guessInput.value = " ";
+    //difference hot cold
+    let diff = Math.abs(guess - answer);
+    if(diff <= 2 && guess !== answer){
+        document.getElementById("msg").textContent += " You're very close!";
+    }  
+    else if(diff <= 5 && guess !== answer){
+        document.getElementById("msg").textContent += " You're close!";
+    }
+    else if(diff > 5){
+        document.getElementById("msg").textContent += " You're far away!";
+    }
+    input.value = " ";
 });
 
 //give up
