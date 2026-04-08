@@ -44,11 +44,13 @@ document.getElementById("guessBtn").addEventListener("click", function(){
     //correct, too low, too high
     if(guess === answer){
         document.getElementById("msg").textContent = "Correct! " + playerName + ", you guessed the number in " + guessCount + " guesses.";
-
+        scores.push(guessCount);
+        updatescore(guessCount);
+        endGame();
     } else if (guess < answer){
-        document.getElementById("msg").textContent = "Too low! Try again.";
+        document.getElementById("msg").textContent = "Too low!";
     } else {
-        document.getElementById("msg").textContent = "Too high! Try again.";
+        document.getElementById("msg").textContent = "Too high!";
     }
     updatescore(guessCount);
 
@@ -67,10 +69,21 @@ document.getElementById("guessBtn").addEventListener("click", function(){
 });
 
 function updatescore(score){
-        totalWins++;
-        totalGuesses += score;
-        document.getElementById("wins").textContent = "Total Wins: " + totalWins;
-        document.getElementById("avgScore").textContent = "Average Score: " + (totalGuesses / totalWins).toFixed(2);
+    totalWins++;
+    totalGuesses += score;
+    document.getElementById("wins").textContent = "Total Wins: " + totalWins;
+    document.getElementById("avgScore").textContent = "Average Score: " + (totalGuesses / totalWins).toFixed(2);
+
+    scores.push(score);
+    scores.sort(function(a, b){ return a - b; });
+
+    let leaderboard = document.getElementsByName("leaderboard");
+    for(let i = 0; i < leaderboard.length; i++){
+        if(i < scores.length){
+            leaderboard[i].textContent = playerName[i] + ": " + scores[i] + " Guesses";
+        }
+    }
+
 }
 
 //give up
