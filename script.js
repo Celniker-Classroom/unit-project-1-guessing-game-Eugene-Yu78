@@ -41,29 +41,37 @@ document.getElementById("guessBtn").addEventListener("click", function(){
     guessCount++;
     totalGuesses++;
     
+    //correct, too low, too high
     if(guess === answer){
-        document.getElementById("msg").textContent = "Congratulations! You guessed the number in " + guessCount + " guesses.";
-        totalWins++;
-        scores.push(guessCount);
-        endGame();
+        document.getElementById("msg").textContent = "Correct! " + playerName + ", you guessed the number in " + guessCount + " guesses.";
+
     } else if (guess < answer){
         document.getElementById("msg").textContent = "Too low! Try again.";
     } else {
         document.getElementById("msg").textContent = "Too high! Try again.";
     }
+    updatescore(guessCount);
+
     //difference hot cold
     let diff = Math.abs(guess - answer);
     if(diff <= 2 && guess !== answer){
-        document.getElementById("msg").textContent += " You're very close!";
+        document.getElementById("msg").textContent += " You're HOT!";
     }  
     else if(diff <= 5 && guess !== answer){
-        document.getElementById("msg").textContent += " You're close!";
+        document.getElementById("msg").textContent += " You're WARM!";
     }
     else if(diff > 5){
-        document.getElementById("msg").textContent += " You're far away!";
+        document.getElementById("msg").textContent += " You're COLD!";
     }
     input.value = " ";
 });
+
+function updatescore(score){
+        totalWins++;
+        totalGuesses += score;
+        document.getElementById("wins").textContent = "Total Wins: " + totalWins;
+        document.getElementById("avgScore").textContent = "Average Score: " + (totalGuesses / totalWins).toFixed(2);
+}
 
 //give up
 document.getElementById("giveUpBtn").addEventListener("click", function(){
