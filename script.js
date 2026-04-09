@@ -113,8 +113,8 @@ const updatescore = updateScore;
 document.getElementById("giveUpBtn").addEventListener("click", function(){
     let range = getSelectedRange();
     document.getElementById("msg").textContent = "The correct number was " + answer + ". Better luck next time, " + playerName + "!";
-    updateScore(range, false);
-    score = 10;
+    guessCount = 10; // Max guesses for giving up
+    updateScore(guessCount, true);
     updateTimers(new Date().getTime());
     endGame();
     
