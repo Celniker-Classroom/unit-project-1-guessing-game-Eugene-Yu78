@@ -114,8 +114,10 @@ document.getElementById("giveUpBtn").addEventListener("click", function(){
     let range = getSelectedRange();
     document.getElementById("msg").textContent = "The correct number was " + answer + ". Better luck next time, " + playerName + "!";
     updateScore(range, false);
+    score = 10;
     updateTimers(new Date().getTime());
     endGame();
+    
 });
 
 function endGame(){
