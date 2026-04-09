@@ -8,6 +8,8 @@ let totalRounds = 0;
 let totalTimeMs = 0;
 let fastestTimeMs = null;
 let roundStartMs = 0;
+let wins = 0;
+let giveups = 0;
 
 function formatPlayerName(name) {
     if (!name || name.trim() === "") {
@@ -52,14 +54,20 @@ document.getElementById("guessBtn").addEventListener("click", function(){
         document.getElementById("msg").textContent = "Please enter a valid number.";
         return;
     }
+    if(guess < 1 || guess > getSelectedRange()){
+        document.getElementById("msg").textContent = "Please enter a number between 1 and " + getSelectedRange() + ".";
+        return;
+    }
     guessCount++;
     
     //correct, too low, too high
     if(guess === answer){
         document.getElementById("msg").textContent = "Correct! " + playerName + ", you guessed the number in " + guessCount + " guesses.";
+        wins++;
         updateScore(guessCount, true);
         updateTimers(new Date().getTime());
         endGame();
+        
         input.value = "";
         return;
     } else if (guess < answer){
@@ -115,6 +123,7 @@ document.getElementById("giveUpBtn").addEventListener("click", function(){
     document.getElementById("msg").textContent = "The correct number was " + answer + ". Better luck next time, " + playerName + "!";
     guessCount = 10; 
     updateScore(guessCount, true);
+    giveups++;
     updateTimers(new Date().getTime());
     endGame();
     
@@ -148,6 +157,7 @@ function updateTimers(endMs){
     document.getElementById("fastest").textContent = "Fastest Game: " + formatTimeMs(fastestTimeMs);
     document.getElementById("avgTime").textContent = "Average Time: " + formatTimeMs(totalTimeMs / totalRounds);
     roundStartMs = 0;
+    document.getElementById("winP").textContent = "Win Percentage: " + ((wins / (wins + giveups)) * 100).toFixed(2) + "%";
 }
 
 function formatDaySuffix(day){
